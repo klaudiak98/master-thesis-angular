@@ -1,2 +1,55 @@
-<p>register works!</p>
+<section class="container">
+  <h1>Register</h1>
+  <p class="errMsg">{{ errMsg }}</p>
 
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="registerForm">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        placeholder="email"
+        formControlName="email"
+        email
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Confirm password</mat-label>
+      <input
+        type="password"
+        matInput
+        formControlName="matchPassword"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="name"
+        formControlName="name"
+        required
+      />
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      class="formElements"
+      id="button"
+      type="submit"
+      [disabled]="!registerForm.valid"
+    >
+      Register
+    </button>
+  </form>
+  <a routerLink="/login" class="formElements">or sign in!</a>
+</section>

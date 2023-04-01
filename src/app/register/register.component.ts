@@ -17,7 +17,8 @@ import { AuthService } from '../service/auth.service';
 export class RegisterComponent {
   constructor(private service: AuthService, private router: Router) {}
 
-  public errMsg = '';
+  success = false;
+  errMsg = '';
 
   registerForm = new FormGroup(
     {
@@ -39,12 +40,18 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      this.service.RegisterUser(this.registerForm.value).subscribe(
+      const email: string = this.registerForm.value?.email || '';
+      const password: string = this.registerForm.value?.password || '';
+      const name: string = this.registerForm.value?.name || '';
+
+      this.service.register(email, password, name).subscribe(
         (data) => {
+          this.success = true;
           this.router.navigate(['login']);
         },
         (err) => {
-          if (!err.status) {
+          this.success = false;
+          if (!err?.status) {
             this.errMsg = 'No Server Response';
           } else if (err?.status === 409) {
             this.errMsg = 'Account already exists';
@@ -54,7 +61,8 @@ export class RegisterComponent {
         }
       );
     } else {
-      console.error(this.registerForm);
+      this.success = false;
+      this.errMsg = 'Registration failed';
     }
   }
 

@@ -1,5 +1,6 @@
 <div class="container">
   <h1>Login</h1>
+  <p class="errMsg">{{ errMsg }}</p>
 
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="loginForm">
     <mat-form-field>
@@ -7,13 +8,15 @@
       <input
         type="email"
         matInput
-        placeholder="Ex. pat@example.com"
+        placeholder="email"
         formControlName="email"
+        email
+        required
       />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input type="password" matInput formControlName="password" />
+      <input type="password" matInput formControlName="password" required />
     </mat-form-field>
 
     <button

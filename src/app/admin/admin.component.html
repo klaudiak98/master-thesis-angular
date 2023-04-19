@@ -1,5 +1,17 @@
 <section>
-  <ul>
-    <li *ngFor="let user of users">{{ user.name }} {{ user.email }}</li>
-  </ul>
+  <h1>Users list</h1>
+
+  <div *ngIf="users?.length; else elseBlock" class="list">
+    <div
+      *ngFor="let user of users"
+      class="item"
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
+      {{ user?.name }}, {{ user?.email }} 
+      <fa-icon [icon]="faClose" style="color: red; font-size: 1.4em;" (click)="removeUser(user.email)"/>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <p>No users to display</p>
+  </ng-template>
 </section>

@@ -1,1 +1,52 @@
-<p>settings works!</p>
+<section class="container">
+
+    <header style="display: flex; justify-content: space-between;">
+        <h1>Settings</h1>
+        <div style="font-size: 2em; padding-right: 0.5em;">
+            <a routerLink="/profile"><fa-icon [icon]="faClose" style="color: black;"/></a>
+        </div>
+    </header>
+
+    <section class="form">
+        <p class="errMsg">{{ errMsg }}</p>
+
+        <form [formGroup]="updateUserForm" class="form">
+            <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input
+                type="text"
+                matInput
+                placeholder="name"
+                formControlName="name"
+                required
+            />
+            </mat-form-field>
+
+            <h5 style="align-self: flex-start;">Change password</h5>
+            <mat-form-field>
+            <mat-label>new password</mat-label>
+            <input type="password" matInput formControlName="password" required />
+            </mat-form-field>
+
+            <mat-form-field>
+            <mat-label>password again</mat-label>
+            <input
+                type="password"
+                matInput
+                formControlName="matchPassword"
+                required
+            />
+            </mat-form-field>
+
+            <button
+            mat-raised-button
+            class="formElements"
+            id="button"
+            type="submit"
+            (click)="handleSubmit()"
+            >
+            Save
+            </button>
+        </form>
+    </section>
+</section>

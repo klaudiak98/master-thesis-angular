@@ -21,6 +21,9 @@ import { HttpClientModule } from '@angular/common/http';
 import {
   httpInterceptorProviders,
 } from './interceptor/auth.interceptor';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BooksListComponent } from './books-list/books-list.component';
+import { BookComponent } from './book/book.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,8 @@ import {
     ProfileComponent,
     NavbarComponent,
     AdminComponent,
+    BooksListComponent,
+    BookComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +50,7 @@ import {
     MatIconModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FontAwesomeModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

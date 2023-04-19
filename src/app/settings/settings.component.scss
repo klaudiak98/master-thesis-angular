@@ -1,0 +1,27 @@
+@import '../variables';
+
+.container {
+    display: flex;
+    flex-direction: column;
+
+    .form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .formElements {
+        align-self: flex-start;
+        text-decoration: $link-decoration;
+        margin-bottom: 0.7em;
+    }
+
+    #button {
+        background-color: $button-bg;
+        color: $button-text;
+        font-family: $font-family;
+    }
+
+    .errMsg {
+        font-weight: bold;
+    }
+}

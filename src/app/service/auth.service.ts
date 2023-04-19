@@ -84,10 +84,6 @@ export class AuthService {
     return response;
   }
 
-  getUsers() {
-    return this.http.get(`${this.BASE_URL}/users`, this.httpOptions);
-  }
-
   refreshToken() {
     const response: Observable<any> = this.http.get(
       `${this.BASE_URL}/refresh`,

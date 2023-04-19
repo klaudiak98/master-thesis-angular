@@ -66,6 +66,14 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         return this.authService.refreshToken().pipe(
           switchMap(() => {
             this.isRefreshing = false;
+            request = request.clone({
+              setHeaders: {
+                Authorization: `Bearer ${window.sessionStorage.getItem(
+                  'accessToken'
+                )}`,
+              },
+              withCredentials: true,
+            });
 
             return next.handle(request);
           }),

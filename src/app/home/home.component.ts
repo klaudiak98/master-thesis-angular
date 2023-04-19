@@ -7,10 +7,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   currentUser: any;
+  books = [
+    {
+      title: 'Book 1',
+      author: 'sdas',
+      id: 1,
+      img: 'asdas',
+    },
+    {
+      title: 'Book2',
+      author: 'sdafsddzs',
+      id: 2,
+      img: 'asdas',
+    },
+    {
+      title: 'Book 3',
+      author: 'sfdsd',
+      id: 3,
+      img: 'asdas',
+    },
+  ];
+  
+  constructor() {}
 
-  constructor(
-  ) {}
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

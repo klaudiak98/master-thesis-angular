@@ -1,40 +1,34 @@
-
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$master-thesis-angular-primary: mat.define-palette(mat.$indigo-palette);
-$master-thesis-angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$master-thesis-angular-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$master-thesis-angular-theme: mat.define-light-theme((
-  color: (
-    primary: $master-thesis-angular-primary,
-    accent: $master-thesis-angular-accent,
-    warn: $master-thesis-angular-warn,
-  )
-));
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($master-thesis-angular-theme);
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
 
 /* You can add global styles to this file, and also import other style files */
 $background-color: rgba(169, 245, 69, 0.521);
 
-html, body { height: 100%; }
-body { margin: 0; font-family: monospace; background-color: $background-color;}
+body { 
+    margin: 0; 
+    font-family: monospace; 
+    background-color: $background-color;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+.btn {
+    font-size: 1.2em;
+    width: 8em;
+    background-color: rgba(29, 97, 63, 0.958);
+    border-radius: 0.3em;
+    border-color: rgba(28, 135, 82, 0.958);
+}
+
+.btn:hover,
+.btn:active,
+.btn:focus {
+    background-color: rgba(44, 178, 111, 0.958);
+    border-color: rgba(34, 161, 97, 0.958);
+}

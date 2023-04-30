@@ -1,23 +1,18 @@
 <section>
-  <header style="display: flex; justify-content: space-between;">
-    <h1>Hi {{user?.name}}</h1>
-    <div style="font-size: 2em; padding-right: 0.5em;">
-      <a routerLink="/settings"><fa-icon [icon]="faSettings" style="color: black; margin-right: 0.5em;"/></a>
-      <button (click)="signOut()"><fa-icon [icon]="faClose" style="color: black;"/></button>
-    </div>
+  <header style="display: flex; justify-content: space-between">
+    <h1>Hi {{ user.name }}</h1>
   </header>
 
   <section>
-      <h3>Currently reading</h3>
-      <app-books-list [books]=books></app-books-list>
+    <h3>Currently reading</h3>
+    <app-books-list [booksList]="shelf.currentlyReading"></app-books-list>
   </section>
   <section>
-      <h3>Want to read</h3>
-      <app-books-list [books]=books></app-books-list>
+    <h3>Want to read</h3>
+    <app-books-list [booksList]="shelf.wantToRead"></app-books-list>
   </section>
   <section>
-      <h3>Read</h3>
-      <app-books-list [books]=books></app-books-list>
+    <h3>Read</h3>
+    <app-books-list [booksList]="shelf.read"></app-books-list>
   </section>
-
 </section>

@@ -19,13 +19,16 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     private authService: AuthService,
     private eventBusService: EventBusService
   ) {}
-  private isRefreshing = false;
+  private isRefreshing: boolean = false;
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this.authService.isLogged();
+    if (request.url.includes('https://www.googleapis.com')) {
+      return next.handle(request);
+    }
+    const token: string = this.authService.isLogged();
     if (token) {
       request = request.clone({
         setHeaders: {
@@ -34,7 +37,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         withCredentials: true,
       });
     }
-
     request = request.clone({});
 
     return next.handle(request).pipe(

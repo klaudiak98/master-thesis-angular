@@ -8,6 +8,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SettingsComponent } from './settings/settings.component';
+import { BookPageComponent } from './book-page/book-page.component';
 
 const ROLES = {
   User: 100,
@@ -38,6 +39,12 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
+    canActivate: [AuthGuard],
+    data: { allowedRoles: [ROLES.User] },
+  },
+  {
+    path: 'book/:bookId',
+    component: BookPageComponent,
     canActivate: [AuthGuard],
     data: { allowedRoles: [ROLES.User] },
   },

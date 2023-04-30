@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./books-list.component.scss'],
 })
 export class BooksListComponent {
-  @Input('books') 
-  books: any;
+  @Input('booksList')
+  booksList: Array<string> = [''];
 }

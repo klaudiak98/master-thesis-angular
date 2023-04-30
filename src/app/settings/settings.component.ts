@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
+import { AuthService } from '../service/auth.service';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import {
   AbstractControl,
@@ -9,18 +10,34 @@ import {
   Validators,
 } from '@angular/forms';
 
+interface UserRes {
+  name: string;
+  email: string;
+}
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent {
-  errMsg: any;
+export class SettingsComponent implements OnInit {
+  constructor(
+    private userService: UserService,
+    private authService: AuthService
+  ) {}
 
-  constructor(private userService: UserService) {}
   faClose = faWindowClose;
+  errMsg: string = '';
+  user: UserRes = {
+    email: '',
+    name: '',
+  };
 
-  public matchingPasswords(c: AbstractControl): ValidationErrors | null {
+  ngOnInit(): void {
+    this.userService.getUser().subscribe((res: UserRes) => (this.user = res));
+  }
+
+  private matchingPasswords(c: AbstractControl): ValidationErrors | null {
     const password = c.get(['password']);
     const matchPassword = c.get(['matchPassword']);
     if (password?.value !== matchPassword?.value) {
@@ -29,12 +46,7 @@ export class SettingsComponent {
     return null;
   }
 
-  user: any;
-  ngOnInit(): void {
-    this.userService.getUser().subscribe((res) => (this.user = res));
-  }
-
-  updateUserForm = new FormGroup(
+  updateUserForm: FormGroup = new FormGroup(
     {
       password: new FormControl(
         '',
@@ -49,11 +61,16 @@ export class SettingsComponent {
   );
 
   handleSubmit() {
-    const password: string = this.updateUserForm.value?.password || '';
-    const name: string = this.updateUserForm.value?.name || '';
+    const password: string = this.updateUserForm.value.password;
+    const name: string = this.updateUserForm.value.name;
 
-    this.userService
-      .updateUser(this.user.email, name, password)
-      .subscribe((res) => console.log(res));
+    this.userService.updateUser(this.user.email, name, password).subscribe({
+      next: () => alert('Your account has been updated'),
+      error: () => alert('Something went wrong'),
+    });
+  }
+
+  signOut() {
+    this.authService.logout().subscribe(() => window.location.reload());
   }
 }

@@ -1,52 +1,58 @@
-<section class="container">
+<section>
+  <header class="d-flex justify-content-between">
+    <h1>Settings</h1>
+    <button
+      style="font-size: 2em; padding-right: 0.5em; border: none"
+      class="bg-light"
+      (click)="signOut()"
+    >
+      <fa-icon [icon]="faClose" style="color: black" />
+    </button>
+  </header>
 
-    <header style="display: flex; justify-content: space-between;">
-        <h1>Settings</h1>
-        <div style="font-size: 2em; padding-right: 0.5em;">
-            <a routerLink="/profile"><fa-icon [icon]="faClose" style="color: black;"/></a>
-        </div>
-    </header>
+  <section class="form">
+    <p class="errMsg">{{ errMsg }}</p>
 
-    <section class="form">
-        <p class="errMsg">{{ errMsg }}</p>
+    <form [formGroup]="updateUserForm">
+      <div class="form-floating mb-3">
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          class="form-control"
+          placeholder="name"
+          required
+        />
+        <label for="name">Name</label>
+      </div>
 
-        <form [formGroup]="updateUserForm" class="form">
-            <mat-form-field>
-            <mat-label>Name</mat-label>
-            <input
-                type="text"
-                matInput
-                placeholder="name"
-                formControlName="name"
-                required
-            />
-            </mat-form-field>
+      <h5 style="align-self: flex-start">Change password</h5>
 
-            <h5 style="align-self: flex-start;">Change password</h5>
-            <mat-form-field>
-            <mat-label>new password</mat-label>
-            <input type="password" matInput formControlName="password" required />
-            </mat-form-field>
+      <div class="form-floating mb-3">
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-control"
+          placeholder="password"
+          required
+        />
+        <label for="password">Password</label>
+      </div>
 
-            <mat-form-field>
-            <mat-label>password again</mat-label>
-            <input
-                type="password"
-                matInput
-                formControlName="matchPassword"
-                required
-            />
-            </mat-form-field>
+      <div class="form-floating mb-3">
+        <input
+          id="matchPassword"
+          type="password"
+          formControlName="matchPassword"
+          class="form-control"
+          placeholder="confirm password"
+          required
+        />
+        <label for="matchPassword">Confirm password</label>
+      </div>
 
-            <button
-            mat-raised-button
-            class="formElements"
-            id="button"
-            type="submit"
-            (click)="handleSubmit()"
-            >
-            Save
-            </button>
-        </form>
-    </section>
+      <button class="btn" type="submit" (click)="handleSubmit()">Save</button>
+    </form>
+  </section>
 </section>

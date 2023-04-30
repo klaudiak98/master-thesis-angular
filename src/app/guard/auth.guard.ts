@@ -13,10 +13,7 @@ import { AuthService } from '../service/auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
+  canActivate(route: ActivatedRouteSnapshot): boolean {
     const isLoggedIn = this.auth.isLogged();
     const userRoles = this.auth.getRoles();
     const allowedRoles = route.data['allowedRoles'];

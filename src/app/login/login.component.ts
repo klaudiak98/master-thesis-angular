@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
@@ -9,13 +9,10 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(
-    private service: AuthService,
-    private router: Router
-  ) {}
+  constructor(private service: AuthService, private router: Router) {}
 
-  loggedIn = this.service.isLogged();
-  errMsg = '';
+  loggedIn: string = this.service.isLogged() || '';
+  errMsg: string = '';
 
   ngOnInit(): void {
     if (this.loggedIn) {
@@ -23,23 +20,19 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  loginForm = new FormGroup({
+  loginForm: FormGroup = new FormGroup({
     email: new FormControl('', Validators.email),
     password: new FormControl(''),
   });
 
   onSubmit() {
-    console.log(this.loginForm.value);
-
     if (this.loginForm.valid) {
-      const email: string = this.loginForm.value?.email || '';
-      const password: string = this.loginForm.value?.password || '';
+      const email: string = this.loginForm.value.email;
+      const password: string = this.loginForm.value.password;
 
-      this.service.login(email, password).subscribe(
-        (data) => {
-          window.location.reload();
-        },
-        (err) => {
+      this.service.login(email, password).subscribe({
+        next: () => this.router.navigate(['/']),
+        error: (err) => {
           if (!err?.status) {
             this.errMsg = 'No Server Response';
           } else if (err?.status === 400) {
@@ -49,8 +42,8 @@ export class LoginComponent implements OnInit {
           } else {
             this.errMsg = 'Login faild';
           }
-        }
-      );
+        },
+      });
     } else {
       this.errMsg = 'Login failed';
     }

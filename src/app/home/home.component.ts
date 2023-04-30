@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -6,29 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  currentUser: any;
-  books = [
-    {
-      title: 'Book 1',
-      author: 'sdas',
-      id: 1,
-      img: 'asdas',
-    },
-    {
-      title: 'Book2',
-      author: 'sdafsddzs',
-      id: 2,
-      img: 'asdas',
-    },
-    {
-      title: 'Book 3',
-      author: 'sfdsd',
-      id: 3,
-      img: 'asdas',
-    },
-  ];
-  
-  constructor() {}
+  ROLES = {
+    User: 100,
+    Admin: 777,
+  };
+
+  constructor(private service: AuthService) {}
+
+  userRoles = this.service.getRoles();
+  isAdmin = this.userRoles.includes(this.ROLES.Admin);
 
   ngOnInit(): void {}
 }

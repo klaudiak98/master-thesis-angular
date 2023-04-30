@@ -1,33 +1,35 @@
-<div class="container">
+<section class="form">
   <h1>Login</h1>
   <p class="errMsg">{{ errMsg }}</p>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="loginForm">
-    <mat-form-field>
-      <mat-label>Email</mat-label>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-floating mb-3">
       <input
+        id="email"
         type="email"
-        matInput
-        placeholder="email"
         formControlName="email"
-        email
+        class="form-control"
+        placeholder="email"
         required
       />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input type="password" matInput formControlName="password" required />
-    </mat-form-field>
+      <label for="email">Email</label>
+    </div>
 
-    <button
-      mat-raised-button
-      class="formElements"
-      id="button"
-      type="submit"
-      [disabled]="!loginForm.valid"
-    >
+    <div class="form-floating mb-3">
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        class="form-control"
+        placeholder="password"
+        required
+      />
+      <label for="password">Password</label>
+    </div>
+
+    <button class="btn" type="submit" [disabled]="!loginForm.valid">
       Login
     </button>
   </form>
-  <a routerLink="/register" class="formElements">or create new account!</a>
-</div>
+  <a routerLink="/register">or create new account!</a>
+</section>

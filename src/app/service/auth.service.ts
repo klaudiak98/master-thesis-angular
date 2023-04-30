@@ -34,22 +34,22 @@ export class AuthService {
       this.httpOptions
     );
 
-    response.subscribe(
-      (res) => {
+    response.subscribe({
+      next: (res) => {
         window.sessionStorage.setItem('accessToken', res.accessToken);
         window.sessionStorage.setItem('roles', JSON.stringify(res.roles));
       },
-      (err) => {
+      error: (err) => {
         console.error(err);
         window.sessionStorage.clear();
-      }
-    );
+      },
+    });
 
     return response;
   }
 
-  isLogged() {
-    return window.sessionStorage.getItem('accessToken');
+  isLogged(): string {
+    return window.sessionStorage.getItem('accessToken') || '';
   }
 
   verifyRefreshToken() {
@@ -61,8 +61,8 @@ export class AuthService {
   }
 
   getRoles() {
-    const roles = window.sessionStorage.getItem('roles') || '';
-    const len = roles.length;
+    const roles: string = window.sessionStorage.getItem('roles') || '';
+    const len: number = roles.length;
     const rol: number[] = [];
 
     window.sessionStorage

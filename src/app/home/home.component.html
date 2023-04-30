@@ -1,6 +1,4 @@
-<h2>Hello, home here</h2>
-
-<section>
-  <h3>books</h3>
-  <app-books-list [books]="books"></app-books-list>
-</section>
+<app-admin *ngIf="isAdmin; else profile" />
+<ng-template #profile>
+  <app-profile />
+</ng-template>

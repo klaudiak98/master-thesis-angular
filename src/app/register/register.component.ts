@@ -17,10 +17,10 @@ import { AuthService } from '../service/auth.service';
 export class RegisterComponent {
   constructor(private service: AuthService, private router: Router) {}
 
-  success = false;
-  errMsg = '';
+  success: boolean = false;
+  errMsg: string = '';
 
-  registerForm = new FormGroup(
+  registerForm: FormGroup = new FormGroup(
     {
       email: new FormControl(
         '',
@@ -40,16 +40,17 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const email: string = this.registerForm.value?.email || '';
-      const password: string = this.registerForm.value?.password || '';
-      const name: string = this.registerForm.value?.name || '';
+      const email: string = this.registerForm.value.email;
+      const password: string = this.registerForm.value.password;
+      const name: string = this.registerForm.value.name;
 
-      this.service.register(email, password, name).subscribe(
-        (data) => {
+      this.service.register(email, password, name).subscribe({
+        next: () =>{
           this.success = true;
+          alert('New account has been created');
           this.router.navigate(['login']);
         },
-        (err) => {
+        error: (err) => {
           this.success = false;
           if (!err?.status) {
             this.errMsg = 'No Server Response';
@@ -58,8 +59,8 @@ export class RegisterComponent {
           } else {
             this.errMsg = 'Registration faild';
           }
-        }
-      );
+        },
+      })
     } else {
       this.success = false;
       this.errMsg = 'Registration failed';

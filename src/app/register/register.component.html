@@ -1,55 +1,59 @@
-<section class="container">
+<section class="form">
   <h1>Register</h1>
   <p class="errMsg">{{ errMsg }}</p>
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="registerForm">
-    <mat-form-field>
-      <mat-label>Email</mat-label>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-floating mb-3">
       <input
+        id="email"
         type="email"
-        matInput
-        placeholder="email"
         formControlName="email"
-        email
+        class="form-control"
+        placeholder="email"
         required
       />
-    </mat-form-field>
+      <label for="email">Email</label>
+    </div>
 
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input type="password" matInput formControlName="password" required />
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Confirm password</mat-label>
+    <div class="form-floating mb-3">
       <input
+        id="password"
         type="password"
-        matInput
-        formControlName="matchPassword"
+        formControlName="password"
+        class="form-control"
+        placeholder="password"
         required
       />
-    </mat-form-field>
+      <label for="password">Password</label>
+    </div>
 
-    <mat-form-field>
-      <mat-label>Name</mat-label>
+    <div class="form-floating mb-3">
       <input
-        type="text"
-        matInput
-        placeholder="name"
-        formControlName="name"
+        id="matchPassword"
+        type="password"
+        formControlName="matchPassword"
+        class="form-control"
+        placeholder="confirm password"
         required
       />
-    </mat-form-field>
+      <label for="matchPassword">Confirm password</label>
+    </div>
 
-    <button
-      mat-raised-button
-      class="formElements"
-      id="button"
-      type="submit"
-      [disabled]="!registerForm.valid"
-    >
+    <div class="form-floating mb-3">
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="form-control"
+        placeholder="name"
+        required
+      />
+      <label for="name">Name</label>
+    </div>
+
+    <button class="btn" type="submit" [disabled]="!registerForm.valid">
       Register
     </button>
   </form>
-  <a routerLink="/login" class="formElements">or sign in!</a>
+  <a routerLink="/login">or sign in!</a>
 </section>

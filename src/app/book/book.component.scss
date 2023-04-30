@@ -7,4 +7,11 @@
     img {
         max-height: 10em;
     }
+
+    .truncateLongTexts {
+        width: 35em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }

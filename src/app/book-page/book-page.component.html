@@ -1,0 +1,50 @@
+<header class="header">
+  <div>
+    <h1>{{ book.volumeInfo.title }}</h1>
+    <h2 style="font-weight: bold">{{ book.volumeInfo.subtitle }}</h2>
+    <h3>{{ book.volumeInfo.authors }}</h3>
+    <p>{{ book.volumeInfo.publisher }}, {{ book.volumeInfo.publishedDate }}</p>
+  </div>
+  <div>
+    <img
+      src="{{ imgSrc }}"
+      alt="Book cover placeholder"
+      height="100%"
+      style="border: 1px solid #000"
+    />
+  </div>
+</header>
+
+<section
+  style="
+    padding-left: 2em;
+    padding-right: 2em;
+    text-align: center;
+    margin-bottom: 1.5em;
+  "
+>
+  <div style="border: 1px solid #000; padding: 2em; display: inline-block">
+    <h3>Your shelves</h3>
+    <select [(ngModel)]="bookState" class="mb-2">
+      <option disabled value="">-- Select --</option>
+      <option value="read">Read</option>
+      <option value="currentlyReading">Currenly reading</option>
+      <option value="wantToRead">Want to read</option>
+    </select>
+    <br />
+    <div class="d-flex flex-column gap-2 align-items-center">
+      <button (click)="handleSave()" type="submit" class="btn">Save</button>
+      <button
+        (click)="removeFromShelves()"
+        style="border-color: red; background-color: #ffa8a8"
+        class="btn"
+      >
+        Remove from shelves
+      </button>
+    </div>
+  </div>
+</section>
+
+<section style="padding-left: 2em; padding-right: 2em">
+  <div [innerHTML]="book.volumeInfo.description || 'Brak opisu'"></div>
+</section>

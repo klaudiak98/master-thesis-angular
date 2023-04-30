@@ -4,11 +4,15 @@
   <div *ngIf="users?.length; else elseBlock" class="list">
     <div
       *ngFor="let user of users"
-      class="item"
-      style="display: flex; justify-content: space-between; align-items: center"
+      class="item d-flex justify-content-between align-items-center"
     >
-      {{ user?.name }}, {{ user?.email }} 
-      <fa-icon [icon]="faClose" style="color: red; font-size: 1.4em;" (click)="removeUser(user.email)"/>
+      {{ user?.name }}, {{ user?.email }}
+      <fa-icon
+        class="fa-2x"
+        [icon]="faClose"
+        style="color: red"
+        (click)="deleteUser(user.email)"
+      />
     </div>
   </div>
   <ng-template #elseBlock>

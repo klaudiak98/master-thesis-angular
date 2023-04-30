@@ -2,11 +2,27 @@
   <a routerLink="/">
     <img src="../../assets/logo.svg" alt="Logo" height="90px" />
   </a>
-  <mat-form-field id="searchBar">
-    <input type="text" matInput placeholder="Search book" />
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
-  <a routerLink="/profile" id="loginLink"
-    ><fa-icon [icon]="faUser" style="color: black"></fa-icon
-  ></a>
+  <div>
+    <div [formGroup]="searchGroup">
+      <input
+        id="searchInput"
+        type="text"
+        formControlName="searchBook"
+        class="form-control"
+        placeholder="Search book"
+        style="width: 20em"
+      />
+    </div>
+    <div class="searchBarList">
+      <div *ngFor="let book of books?.items" class="box" (click)="clear()">
+        <a [routerLink]="['book', book.id]" style="color: black">
+          <p class="title">{{ book?.volumeInfo?.title }}</p>
+          <p class="author">{{ book?.volumeInfo?.authors }}</p>
+        </a>
+      </div>
+    </div>
+  </div>
+  <a routerLink="/settings">
+    <fa-icon [icon]="faCogs" style="color: black" class="fa-2x"></fa-icon>
+  </a>
 </nav>

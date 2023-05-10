@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShelfService } from '../service/shelf.service';
 import { UserService } from '../service/user.service';
-import { HttpClient } from '@angular/common/http';
+import { switchMap } from 'rxjs/operators';
+import { Observable, combineLatest, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 interface BookInt {
   id: string;
@@ -30,6 +32,10 @@ interface UserInt {
   styleUrls: ['./book-page.component.scss'],
 })
 export class BookPageComponent implements OnInit {
+  bookId: string = '';
+  book$: Observable<BookInt> = new Observable<BookInt>();
+  bookState$: Observable<string> = new Observable<string>();
+
   constructor(
     private route: ActivatedRoute,
     private shelfService: ShelfService,
@@ -38,52 +44,65 @@ export class BookPageComponent implements OnInit {
   ) {}
   GOOGLE_BOOKS_API = 'https://www.googleapis.com/books/v1/volumes/';
 
-  bookId: string = '';
-  book: BookInt = {
-    id: '',
-    volumeInfo: {
-      imageLinks: {
-        thumbnail: '',
-      },
-      title: '',
-      subtitle: '',
-      authors: [''],
-      publisher: '',
-      publishedDate: '',
-      description: '',
-    },
-  };
   imgSrc: string = 'assets/book-cover-placeholder.png';
-  bookState: string = '';
   user: UserInt = {
     email: '',
     name: '',
   };
 
+  getBook(bookId: string) {
+    console.log('a tu wchodzi');
+    return this.http.get<BookInt>(`${this.GOOGLE_BOOKS_API}${bookId}`);
+  }
+  
+  BASE_URL = 'http://localhost:3500';
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+    withCredentials: true,
+  };
+
+  getBookState(email: string, bookId: string) {
+    return this.http.post<string>(
+      `${this.BASE_URL}/shelves/check-book`,
+      {
+        email,
+        bookId,
+      },
+      this.httpOptions
+    );
+  }
+
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.bookId = params['bookId'];
-      this.http
-        .get<BookInt>(`${this.GOOGLE_BOOKS_API}${this.bookId}`)
-        .subscribe((res) => {
-          this.book = res;
-          if (res.volumeInfo?.imageLinks?.thumbnail) {
-            this.imgSrc = res.volumeInfo.imageLinks.thumbnail;
-          }
-        });
     });
 
     this.userService.getUser().subscribe((res) => {
       this.user = res;
-      this.shelfService
-        .getBookState(this.user.email, this.bookId)
-        .subscribe((res) => (this.bookState = res));
     });
+
+    this.book$ = this.route.params.pipe(
+      switchMap((params) => this.getBook(params['bookId']))
+    );
+
+    this.bookState$ = combineLatest([
+      this.userService.getUser(),
+      this.route.params,
+    ]).pipe(
+      switchMap(([user, params]) =>
+        this.getBookState(user.email, params['bookId'])
+      )
+    );
   }
 
   handleSave() {
+    let newState = '';
+    this.bookState$.subscribe((val: string) => (newState = val));
+
     const response = this.shelfService
-      .changeBookState(this.user.email, this.bookId, this.bookState)
+      .changeBookState(this.user.email, this.bookId, newState)
       .subscribe();
     response.add(alert('The book has been saved'));
   }
@@ -93,6 +112,6 @@ export class BookPageComponent implements OnInit {
       .changeBookState(this.user.email, this.bookId, '')
       .subscribe();
     response.add(alert('The book has been removed from your shelves'));
-    this.bookState = '';
+    this.bookState$ = of('');
   }
 }

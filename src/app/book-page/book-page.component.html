@@ -1,5 +1,5 @@
 <header class="header">
-  <div>
+  <div *ngIf="book$ | async as book">
     <h1>{{ book.volumeInfo.title }}</h1>
     <h2 style="font-weight: bold">{{ book.volumeInfo.subtitle }}</h2>
     <h3>{{ book.volumeInfo.authors }}</h3>
@@ -25,7 +25,7 @@
 >
   <div style="border: 1px solid #000; padding: 2em; display: inline-block">
     <h3>Your shelves</h3>
-    <select [(ngModel)]="bookState" class="mb-2">
+    <select [(ngModel)]="bookState$" class="mb-2">
       <option disabled value="">-- Select --</option>
       <option value="read">Read</option>
       <option value="currentlyReading">Currenly reading</option>
@@ -45,6 +45,6 @@
   </div>
 </section>
 
-<section style="padding-left: 2em; padding-right: 2em">
+<section style="padding-left: 2em; padding-right: 2em" *ngIf="book$ | async as book">
   <div [innerHTML]="book.volumeInfo.description || 'Brak opisu'"></div>
 </section>

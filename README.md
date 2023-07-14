@@ -1,4 +1,4 @@
-# Bookshelf
+# master-thesis-angular
 
 1/4 Master Thesis: _"Comparative analysis of the modern front-end technologies"_
 
